@@ -1,5 +1,5 @@
 radio.onReceivedNumber(function (receivedNumber) {
-    if (rounds <= 3) {
+    if (rounds < 3) {
         if (Myhand == receivedNumber) {
             basic.showString("Tie")
         } else if (Myhand == 1 && receivedNumber == 2) {
@@ -21,12 +21,16 @@ radio.onReceivedNumber(function (receivedNumber) {
             basic.showString("P1 point")
             P2_score += 1
         }
-    } else if (P2_score > P1_score) {
-        basic.showString("P2 win")
-    } else if (P2_score > P1_score) {
-        basic.showString("P1 win")
-    } else if (P2_score > P1_score) {
-        basic.showString("no win")
+    }
+    rounds += 1
+    if (rounds == 3) {
+        if (P2_score == P1_score) {
+            basic.showString("no win")
+        } else if (P2_score > P1_score) {
+            basic.showString("P2 win")
+        } else if (P2_score > P1_score) {
+            basic.showString("P1 win")
+        }
     }
 })
 input.onButtonPressed(Button.A, function () {
@@ -40,7 +44,6 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 input.onButtonPressed(Button.AB, function () {
-    rounds += 1
     radio.sendNumber(Myhand)
 })
 input.onButtonPressed(Button.B, function () {
@@ -53,9 +56,9 @@ input.onButtonPressed(Button.B, function () {
         Scissor.showImage(0)
     }
 })
-let Myhand = 0
-let P1_score = 0
 let P2_score = 0
+let P1_score = 0
+let Myhand = 0
 let rounds = 0
 let Scissor: Image = null
 let Paper: Image = null
